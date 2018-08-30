@@ -17,13 +17,14 @@ public class CircularShifter {
                 String sentence = String.join(" ", words);
 
                 //Check for fullstop not at end
-                while (sentence.contains(".") && sentence.indexOf(".") != sentence.length() - 1) {
-                    sentence = sentence.replace(".", "");
+                while (sentence.contains(".") && (sentence.indexOf(".") != sentence.length() - 1)) {
+                    //Regex syntax
+                    sentence = sentence.replaceFirst("\\.", "");
                 }
 
                 //Remove comma if at end
-                while (sentence.contains(",") && sentence.indexOf(",") == sentence.length() - 1) {
-                    sentence = sentence.replace(",", "");
+                while (sentence.contains(",") && (sentence.lastIndexOf(",") == sentence.length() - 1)) {
+                    sentence = sentence.substring(0, sentence.lastIndexOf(","));
                 }
 
                 resultArray.add(sentence);
@@ -47,5 +48,12 @@ public class CircularShifter {
             System.arraycopy(words, 0, shiftedWords, shiftedWords.length - 1, 1);
         }
         return shiftedWords;
+    }
+
+    private String replaceLast(String string, String from, String to) {
+        int lastIndex = string.lastIndexOf(from);
+        if (lastIndex < 0) return string;
+        String tail = string.substring(lastIndex).replaceFirst(from, to);
+        return string.substring(0, lastIndex) + tail;
     }
 }
