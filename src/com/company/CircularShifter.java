@@ -14,7 +14,19 @@ public class CircularShifter {
             String[] words = getWordsFromLine(line);
             for(int i = 0; i < words.length; i++) {
                 words = shiftLeft(words);
-                resultArray.add(String.join(" ", words));
+                String sentence = String.join(" ", words);
+
+                //Check for fullstop not at end
+                while (sentence.contains(".") && sentence.indexOf(".") != sentence.length() - 1) {
+                    sentence = sentence.replace(".", "");
+                }
+
+                //Remove comma if at end
+                while (sentence.contains(",") && sentence.indexOf(",") == sentence.length() - 1) {
+                    sentence = sentence.replace(",", "");
+                }
+
+                resultArray.add(sentence);
             }
         }
 
