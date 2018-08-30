@@ -13,7 +13,8 @@ public class CircularShifter {
         for (String line: allLines) {
             String[] words = getWordsFromLine(line);
             for(int i = 0; i < words.length; i++) {
-                resultArray.add(shiftLeft(words));
+                words = shiftLeft(words);
+                resultArray.add(String.join(" ", words));
             }
         }
 
@@ -25,7 +26,7 @@ public class CircularShifter {
         return line.split("\\s+");
     }
 
-    private String shiftLeft(String[] words) {
+    private String[] shiftLeft(String[] words) {
 
         String[] shiftedWords = new String[words.length]; //Temp array
         if (words.length > 1) {
@@ -33,8 +34,6 @@ public class CircularShifter {
             System.arraycopy(words, 1, shiftedWords, 0, words.length - 1);
             System.arraycopy(words, 0, shiftedWords, shiftedWords.length - 1, 1);
         }
-
-        return String.join(" ", shiftedWords);
-
+        return shiftedWords;
     }
 }
