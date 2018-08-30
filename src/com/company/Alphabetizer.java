@@ -6,14 +6,8 @@ import java.util.List;
 
 public class Alphabetizer {
 
-    private List<String> shiftedLines;
-
-    public Alphabetizer(List<String> shiftedLinesInput) {
-        shiftedLines = new ArrayList<String>(shiftedLinesInput);
-    }
-
-    public List<String> getSortedLines() {
-        Collections.sort(shiftedLines);
-        return shiftedLines;
+    public List<String> getSortedLines(List<String> shiftedLinesInput) {
+        Collections.sort(shiftedLinesInput);
+        return shiftedLinesInput;
     }
 }
