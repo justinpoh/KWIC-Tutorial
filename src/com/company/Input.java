@@ -5,7 +5,14 @@ import java.util.List;
 import java.util.Scanner;
 
 public class Input {
-    public List<String> readAllLines() {
+
+    private Pipe outputPipe;
+
+    public Input(Pipe outputPipe){
+        this.outputPipe = outputPipe;
+    }
+
+    public void readAllLines() {
         Scanner input = new Scanner(System.in);
         List<String> allLines = new ArrayList<String>();
 
@@ -17,6 +24,6 @@ public class Input {
             currentLine = input.nextLine().trim();
         }
 
-        return allLines;
+        outputPipe.sendData(allLines);
     }
 }

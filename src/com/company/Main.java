@@ -8,16 +8,19 @@ public class Main {
 
         //Pipes and Filter architecture
 
-        Input inputFilter = new Input();
-        List<String> lines = inputFilter.readAllLines();
+        //Initializing pipes and filters
+        Pipe pipe1 = new Pipe();
+        Pipe pipe2 = new Pipe();
+        Pipe pipe3 = new Pipe();
 
-        CircularShifter circularShifterFilter = new CircularShifter();
-        lines = circularShifterFilter.circularShift(lines);
+        Input inputFilter = new Input(pipe1);
+        CircularShifter circularShifterFilter = new CircularShifter(pipe1, pipe2);
+        Alphabetizer alphabetizerFilter = new Alphabetizer(pipe2, pipe3);
+        Output outputFilter = new Output(pipe3);
 
-        Alphabetizer alphabetizerFilter = new Alphabetizer();
-        lines = alphabetizerFilter.getSortedLines(lines);
-
-        Output outputFilter = new Output();
-        outputFilter.printAllSortedLines(lines);
+        inputFilter.readAllLines();
+        circularShifterFilter.circularShift();
+        alphabetizerFilter.sortLines();
+        outputFilter.printAllSortedLines();
     }
 }
