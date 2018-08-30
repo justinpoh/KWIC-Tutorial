@@ -1,10 +1,18 @@
 package com.company;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class Output {
-    public void printAllSortedLines(List<String> sortedLines) {
+
+    private Pipe inputPipe;
+
+    public Output(Pipe inputPipe){
+        this.inputPipe = inputPipe;
+    }
+
+    public void printAllSortedLines() {
+
+        List<String> sortedLines = inputPipe.getData();
 
         System.out.println("These are the shifted and sorted lines:");
 

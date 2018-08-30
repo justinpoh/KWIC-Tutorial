@@ -5,9 +5,17 @@ import java.util.List;
 
 public class CircularShifter {
 
+    private Pipe outputPipe;
+    private Pipe inputPipe;
 
-    public List<String> circularShift(List<String> allLines) {
+    public CircularShifter(Pipe inputPipe, Pipe outputPipe){
+        this.outputPipe = outputPipe;
+        this.inputPipe = inputPipe;
+    }
 
+    public void circularShift() {
+
+        List<String> allLines = inputPipe.getData();
         List<String> resultArray = new ArrayList<String>();
 
         for (String line: allLines) {
@@ -31,8 +39,7 @@ public class CircularShifter {
             }
         }
 
-        return resultArray;
-
+        outputPipe.sendData(resultArray);
     }
 
     private String[] getWordsFromLine(String line) {
