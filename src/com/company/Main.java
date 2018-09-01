@@ -1,7 +1,5 @@
 package com.company;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Scanner;
 
 public class Main {
@@ -13,9 +11,9 @@ public class Main {
         Pipe pipe2 = new Pipe();
         Pipe pipe3 = new Pipe();
 
-        CircularShifter circularShifterFilter = new CircularShifter(pipe1, pipe2);
-        Alphabetizer alphabetizerFilter = new Alphabetizer(pipe2, pipe3);
-        Output outputFilter = new Output(pipe3);
+        CircularShifterFilter circularShifterFilter = new CircularShifterFilter(pipe1, pipe2);
+        AlphabetizerFilter alphabetizerFilter = new AlphabetizerFilter(pipe2, pipe3);
+        OutputFilter outputFilter = new OutputFilter(pipe3);
 
         Scanner input = new Scanner(System.in);
 
