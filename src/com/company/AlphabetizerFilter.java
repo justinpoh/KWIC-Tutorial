@@ -4,14 +4,14 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class Alphabetizer {
+public class AlphabetizerFilter {
 
     private Pipe outputPipe;
     private Pipe inputPipe;
 
     private List<String> allSortedResult;
 
-    public Alphabetizer(Pipe inputPipe, Pipe outputPipe){
+    public AlphabetizerFilter(Pipe inputPipe, Pipe outputPipe){
         this.outputPipe = outputPipe;
         this.inputPipe = inputPipe;
         allSortedResult = new ArrayList<>();

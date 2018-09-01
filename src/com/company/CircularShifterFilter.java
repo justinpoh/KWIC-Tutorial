@@ -3,12 +3,12 @@ package com.company;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CircularShifter {
+public class CircularShifterFilter {
 
     private Pipe outputPipe;
     private Pipe inputPipe;
 
-    public CircularShifter(Pipe inputPipe, Pipe outputPipe){
+    public CircularShifterFilter(Pipe inputPipe, Pipe outputPipe){
         this.outputPipe = outputPipe;
         this.inputPipe = inputPipe;
     }
