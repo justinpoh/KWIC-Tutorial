@@ -53,14 +53,10 @@ public class CircularShifter {
             //Copy (2nd word onwards) to shiftedWords then copy first word to the last index of shiftedWords
             System.arraycopy(words, 1, shiftedWords, 0, words.length - 1);
             System.arraycopy(words, 0, shiftedWords, shiftedWords.length - 1, 1);
+        } else {
+            return words;
         }
         return shiftedWords;
     }
 
-    private String replaceLast(String string, String from, String to) {
-        int lastIndex = string.lastIndexOf(from);
-        if (lastIndex < 0) return string;
-        String tail = string.substring(lastIndex).replaceFirst(from, to);
-        return string.substring(0, lastIndex) + tail;
-    }
 }

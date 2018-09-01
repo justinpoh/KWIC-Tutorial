@@ -20,6 +20,7 @@ public class Output {
             System.out.println(line);
         }
 
-        System.out.println("End of program. Good bye!");
+        System.out.println("Press Ctrl D to end the program");
+        System.out.println("Please type in the line(s):");
     }
 }
