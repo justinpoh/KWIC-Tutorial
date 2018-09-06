@@ -1,25 +1,33 @@
 package com.company;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.TreeSet;
+import java.util.concurrent.LinkedBlockingQueue;
 
-public class AlphabetizerFilter {
+public class AlphabetizerFilter implements Runnable {
 
-    private Pipe outputPipe;
-    private Pipe inputPipe;
+    private LinkedBlockingQueue<TreeSet<String>> outputPipe;
+    private LinkedBlockingQueue<String> inputPipe;
+    private TreeSet<String> sortedResult = new TreeSet<String>();
 
-    private List<String> allSortedResult;
-
-    public AlphabetizerFilter(Pipe inputPipe, Pipe outputPipe){
+    public AlphabetizerFilter(LinkedBlockingQueue<String> inputPipe, LinkedBlockingQueue<TreeSet<String>> outputPipe){
         this.outputPipe = outputPipe;
         this.inputPipe = inputPipe;
-        allSortedResult = new ArrayList<>();
     }
 
-    public void sortLines() {
-        allSortedResult.addAll(inputPipe.getData());
-        Collections.sort(allSortedResult);
-        outputPipe.sendData(allSortedResult);
+    private void sortLines() {
+        try {
+            sortedResult.add(inputPipe.take());
+            outputPipe.put(new TreeSet<String>(sortedResult));
+
+        }catch(Exception e){
+            System.out.println(e.getStackTrace());
+        }
+    }
+
+    @Override
+    public void run(){
+        while(true){
+            sortLines();
+        }
     }
 }

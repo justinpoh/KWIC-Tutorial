@@ -1,28 +1,36 @@
 package com.company;
 
-import java.util.List;
+import java.util.TreeSet;
+import java.util.concurrent.LinkedBlockingQueue;
 
-public class OutputFilter {
+public class OutputFilter implements Runnable {
 
-    private Pipe inputPipe;
+    private LinkedBlockingQueue<TreeSet<String>> inputPipe;
 
-    public OutputFilter(Pipe inputPipe){
+    public OutputFilter(LinkedBlockingQueue<TreeSet<String>>  inputPipe){
         this.inputPipe = inputPipe;
     }
 
-public void printAllSortedLines() {
+    private void printAllSortedLines() {
 
-        List<String> sortedLines = inputPipe.getData();
 
-        System.out.println("These are the shifted and sorted lines:");
-
-        for (String line : sortedLines) {
-            System.out.println(line);
+        try {
+            TreeSet<String> sortedLines = inputPipe.take();
+            System.out.println("[Result]:");
+            System.out.println();
+            sortedLines.forEach(System.out::println);
+            System.out.println();
+            System.out.println("Please type in the next line (Press Ctrl+D to end the program):");
+            System.out.println();
+        }catch(Exception e){
+            System.out.println(e.getStackTrace());
         }
+    }
 
-
-        System.out.println();
-        System.out.println("Press Ctrl D to end the program");
-        System.out.println("Please type in the next line(s):");
+    @Override
+    public void run(){
+        while(true){
+            printAllSortedLines();
+        }
     }
 }

@@ -1,27 +1,25 @@
 package com.company;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.LinkedBlockingQueue;
 
-public class CircularShifterFilter {
+public class CircularShifterFilter implements Runnable {
 
-    private Pipe outputPipe;
-    private Pipe inputPipe;
+    private LinkedBlockingQueue<String> outputPipe;
+    private LinkedBlockingQueue<String> inputPipe;
     private List<String>  wordsToIgnore;
 
-    public CircularShifterFilter(Pipe inputPipe, Pipe outputPipe, List<String> wordsToIgnore){
+    public CircularShifterFilter(LinkedBlockingQueue<String> inputPipe, LinkedBlockingQueue<String> outputPipe, List<String> wordsToIgnore){
         this.outputPipe = outputPipe;
         this.inputPipe = inputPipe;
         this.wordsToIgnore = wordsToIgnore;
     }
 
-    public void circularShift() {
+    private void circularShift() {
 
-        List<String> allLines = inputPipe.getData();
-        List<String> resultArray = new ArrayList<String>();
-
-        for (String line: allLines) {
-            String[] words = getWordsFromLine(line);
+        try {
+            String inputLine = inputPipe.take();
+            String[] words = getWordsFromLine(inputLine);
             for(int i = 0; i < words.length; i++) {
                 words = shiftLeft(words);
                 if(!wordsToIgnore.contains(words[0])) {
@@ -38,12 +36,12 @@ public class CircularShifterFilter {
                         sentence = sentence.substring(0, sentence.lastIndexOf(","));
                     }
 
-                    resultArray.add(sentence);
+                    outputPipe.put(sentence);
                 }
             }
+        }catch (Exception e){
+            System.out.println(e.getStackTrace());
         }
-
-        outputPipe.sendData(resultArray);
     }
 
     private String[] getWordsFromLine(String line) {
@@ -61,6 +59,13 @@ public class CircularShifterFilter {
             return words;
         }
         return shiftedWords;
+    }
+
+    @Override
+    public void run(){
+        while(true){
+            circularShift();
+        }
     }
 
 }
