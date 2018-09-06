@@ -7,10 +7,12 @@ public class CircularShifterFilter {
 
     private Pipe outputPipe;
     private Pipe inputPipe;
+    private List<String>  wordsToIgnore;
 
-    public CircularShifterFilter(Pipe inputPipe, Pipe outputPipe){
+    public CircularShifterFilter(Pipe inputPipe, Pipe outputPipe, List<String> wordsToIgnore){
         this.outputPipe = outputPipe;
         this.inputPipe = inputPipe;
+        this.wordsToIgnore = wordsToIgnore;
     }
 
     public void circularShift() {
@@ -22,20 +24,22 @@ public class CircularShifterFilter {
             String[] words = getWordsFromLine(line);
             for(int i = 0; i < words.length; i++) {
                 words = shiftLeft(words);
-                String sentence = String.join(" ", words);
+                if(!wordsToIgnore.contains(words[0])) {
+                    String sentence = String.join(" ", words);
 
-                //Check for fullstop not at end
-                while (sentence.contains(".") && (sentence.indexOf(".") != sentence.length() - 1)) {
-                    //Regex syntax
-                    sentence = sentence.replaceFirst("\\.", "");
+                    //Check for fullstop not at end
+                    while (sentence.contains(".") && (sentence.indexOf(".") != sentence.length() - 1)) {
+                        //Regex syntax
+                        sentence = sentence.replaceFirst("\\.", "");
+                    }
+
+                    //Remove comma if at end
+                    while (sentence.contains(",") && (sentence.lastIndexOf(",") == sentence.length() - 1)) {
+                        sentence = sentence.substring(0, sentence.lastIndexOf(","));
+                    }
+
+                    resultArray.add(sentence);
                 }
-
-                //Remove comma if at end
-                while (sentence.contains(",") && (sentence.lastIndexOf(",") == sentence.length() - 1)) {
-                    sentence = sentence.substring(0, sentence.lastIndexOf(","));
-                }
-
-                resultArray.add(sentence);
             }
         }
 
