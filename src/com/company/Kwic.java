@@ -5,7 +5,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
-public class Main {
+public class Kwic {
 
     public static void main(String[] args) {
 
